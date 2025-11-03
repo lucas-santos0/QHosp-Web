@@ -45,7 +45,7 @@ export function Contato() {
 
       <div className={estilos.quaseTudo}>
         <div className={estilos.box}>
-          <div className={estilos.titulo}>Contato</div>
+          <div className={estilos.titulo}>Esta tendo problemas? envie um email de para nossa equipe!</div>
 
           <form className={estilos.formulario} onSubmit={handleSubmit}>
             <input

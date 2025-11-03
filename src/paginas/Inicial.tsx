@@ -194,7 +194,7 @@ export function Inicial() {
 
       <div className={estilos.quaseTudo}>
         <div className={estilos.box}>
-          <div className={estilos.titulo}>Qual Hospital?</div>
+          <div className={estilos.titulo}>Busque pelo Hospital desejado!</div>
 
           <form onSubmit={handleSubmit(verificarEstabelecimento)}>
             <textarea className={estilos.areaTexto} {...register("localizacao")} placeholder="Digite o nome do municipio"></textarea>
