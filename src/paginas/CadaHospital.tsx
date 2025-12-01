@@ -25,33 +25,33 @@ interface FirebaseHospital {
 }
 
 export function CadaHospital() {
-  const { id } = useParams();
+  const params = useParams();
+  const id = params.id as string | undefined;
+
   const [hospital, setHospital] = useState<any>(null);
 
   useEffect(() => {
-    if (!id) return;
-    loadData();
+    if (!id) return; // agora TS não reclama
+    loadData(id);
   }, [id]);
 
-  async function loadData() {
-    // 1) ---------------------- BUSCAR FIREBASE ----------------------
-    const ref = doc(db, "Hospitais", id);
+  async function loadData(cnesId: string) {
+    // 1) Firebase
+    const ref = doc(db, "Hospitais", cnesId);
     const snap = await getDoc(ref);
     const firebaseData: FirebaseHospital | null =
       snap.exists() ? (snap.data() as FirebaseHospital) : null;
 
-    // 2) ---------------------- BUSCAR API CNES ----------------------
+    // 2) API CNES
     const respostaJSON = await fetch("/cnes_estabelecimentos35.json");
     const dados = await respostaJSON.json();
 
-    // achar hospital da api pelo CO_CNES
     const apiData: ApiHospital | null =
-      dados.find((h: any) => h.CO_CNES === id) ?? null;
+      dados.find((h: any) => h.CO_CNES === cnesId) ?? null;
 
-    // 3) ---------------------- MONTAR OBJETO COMPLETO ----------------------
-    // Firebase sempre tem prioridade
+    // 3) Merge
     const merged = {
-      codigoCnes: id,
+      codigoCnes: cnesId,
       nome: firebaseData?.nome ?? apiData?.NO_FANTASIA ?? "Não informado",
       lotacao: firebaseData?.lotacao ?? "Não informado",
       localizacao:
@@ -64,20 +64,16 @@ export function CadaHospital() {
         firebaseData?.servicoDisponivel ??
         apiData?.DS_TURNO_ATENDIMENTO ??
         "Não informado",
-
-      // extras da API:
       latitude: apiData?.NU_LATITUDE ?? null,
       longitude: apiData?.NU_LONGITUDE ?? null,
     };
 
     setHospital(merged);
 
-    // 4) ---------------------- SALVAR NO FIREBASE (SE FALTOU COISA) ----------------------
+    // 4) Salvar no Firebase
     if (!firebaseData) {
-      // documento não existia → criar
       await setDoc(ref, merged);
     } else {
-      // documento existia → mas só salva se tiver campo faltando
       const precisaAtualizar =
         Object.keys(merged).some((k) => (firebaseData as any)[k] == null);
 
@@ -85,11 +81,10 @@ export function CadaHospital() {
     }
   }
 
-  // ---------------------- RENDER ----------------------
   if (!hospital) return <div>Carregando...</div>;
 
   return (
-      <div className={estilos.tudo}>
+    <div className={estilos.tudo}>
       <div className={estilos.quaseTudo}>
         <div className={estilos.box}>
           <h1 className={estilos.titulo}>Detalhes do Hospital</h1>
@@ -112,12 +107,16 @@ export function CadaHospital() {
 
             <div className={estilos.infoLinha}>
               <div className={estilos.infoTitulo}>Funcionários</div>
-              <div className={estilos.infoValor}>{hospital.numeroFuncionarios}</div>
+              <div className={estilos.infoValor}>
+                {hospital.numeroFuncionarios}
+              </div>
             </div>
 
             <div className={estilos.infoLinha}>
               <div className={estilos.infoTitulo}>Serviços Disponíveis</div>
-              <div className={estilos.infoValor}>{hospital.servicoDisponivel}</div>
+              <div className={estilos.infoValor}>
+                {hospital.servicoDisponivel}
+              </div>
             </div>
 
             <div className={estilos.infoLinha}>
@@ -127,12 +126,16 @@ export function CadaHospital() {
 
             <div className={estilos.infoLinha}>
               <div className={estilos.infoTitulo}>Latitude</div>
-              <div className={estilos.infoValor}>{hospital.latitude ?? "Sem latitude"}</div>
+              <div className={estilos.infoValor}>
+                {hospital.latitude ?? "Sem latitude"}
+              </div>
             </div>
 
             <div className={estilos.infoLinha}>
               <div className={estilos.infoTitulo}>Longitude</div>
-              <div className={estilos.infoValor}>{hospital.longitude ?? "Sem longitude"}</div>
+              <div className={estilos.infoValor}>
+                {hospital.longitude ?? "Sem longitude"}
+              </div>
             </div>
           </div>
 
