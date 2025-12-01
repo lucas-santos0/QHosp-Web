@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Carrossel } from '../componentes/Carrossel';
+import { CarrosselEsta } from '../componentes/CarrosselEsta';
 
 export function Inicial() {
   const schema = z.object({
@@ -11,11 +12,15 @@ export function Inicial() {
     nome: z.string()
   });
 
+  const [hospitaisExibidos, setHospitaisExibidos] = useState<any[]>([]);
+
+
+
   type FormData = z.infer<typeof schema>;
 
   // Tipo do hospital
   type Hospital = {
-    CO_IBGE: string;  // CNES vem como string
+    CO_IBGE: string;
     [key: string]: any;
   };
 
@@ -40,11 +45,11 @@ export function Inicial() {
     console.log('Município digitado:', data.localizacao);
 
     try {
-      // 1️⃣ Buscar municípios do IBGE
+      // Buscar municípios do IBGE
       const resposta = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/municipios');
       const municipios: Municipio[] = await resposta.json();
 
-      // 2️⃣ Encontrar município pelo nome (normalizando acentos)
+      // Encontrar município pelo nome (normalizando acentos)
       const municipio = municipios.find(
         (m) => normalizar(m.nome) === normalizar(data.localizacao)
       );
@@ -54,14 +59,14 @@ export function Inicial() {
         return;
       }
 
-      // 3️⃣ Buscar hospitais CNES
+      // Buscar hospitais CNES
       const respostaJSON = await fetch('/cnes_estabelecimentos35.json');
       const respostaJS: Hospital[] = await respostaJSON.json();
 
-      // 4️⃣ Ajustar código IBGE para 6 dígitos (CNES não tem dígito verificador)
+      // Ajustar código IBGE para 6 dígitos (CNES não tem dígito verificador)
       const codigoCNES = String(Math.floor(municipio.id / 10));
 
-      // 5️⃣ Filtrar hospitais do município
+      // Filtrar hospitais do município
       const hospitaisFiltrados = respostaJS.filter(hospital =>
         hospital.CO_IBGE === codigoCNES
       );
@@ -105,17 +110,26 @@ export function Inicial() {
         normalizar(hospital.NO_FANTASIA || "").includes(normalizar(data.nome))
         );
         if (hospitalFiltrado.length > 0 || hospitalFiltrado == undefined) {
+          const dadosCarrossel = hospitalFiltrado.map(h => ({
+          imagem: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f",
+          nome: h.NO_FANTASIA || "Nome não informado",
+          endereco: `${h.NO_LOGRADOURO || ""}, ${h.NU_ENDERECO || ""} - ${h.NO_BAIRRO || ""}`,
+          lotacao: Math.floor(Math.random() * 100),
+          cnes: h.CO_CNES
+        }));
+
+          setHospitaisExibidos(dadosCarrossel)
           console.log(hospitalFiltrado);
         } else {
           console.log("hospital não encontrado");
         }
       }
       else if(data.localizacao !== "" && data.nome == ""){
-        // 1️⃣ Buscar municípios do IBGE
+        // Buscar municípios do IBGE
       const resposta = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/municipios');
       const municipios: Municipio[] = await resposta.json();
 
-      // 2️⃣ Encontrar município pelo nome (normalizando acentos)
+      // Encontrar município pelo nome (normalizando acentos)
       const municipio = municipios.find(
         (m) => normalizar(m.nome) === normalizar(data.localizacao)
       );
@@ -125,18 +139,26 @@ export function Inicial() {
         return;
       }
 
-      // 3️⃣ Buscar hospitais CNES
+      // Buscar hospitais CNES
       const respostaJSON = await fetch('/cnes_estabelecimentos35.json');
       const respostaJS: Hospital[] = await respostaJSON.json();
 
-      // 4️⃣ Ajustar código IBGE para 6 dígitos (CNES não tem dígito verificador)
+      // Ajustar código IBGE para 6 dígitos
       const codigoCNES = String(Math.floor(municipio.id / 10));
 
-      // 5️⃣ Filtrar hospitais do município
+      // Filtrar hospitais do município
       const hospitaisFiltrados = respostaJS.filter(hospital =>
         hospital.CO_IBGE === codigoCNES
       );
+      const dadosCarrossel = hospitaisFiltrados.map(h => ({
+        imagem: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f",
+        nome: h.NO_FANTASIA || "Nome não informado",
+        endereco: `${h.NO_LOGRADOURO || ""}, ${h.NU_ENDERECO || ""} - ${h.NO_BAIRRO || ""}`,
+        lotacao: Math.floor(Math.random() * 100),
+        cnes: h.CO_CNES
+      }));
 
+      setHospitaisExibidos(dadosCarrossel)
       console.log("Hospitais filtrados:", hospitaisFiltrados);
       }
 
@@ -144,7 +166,7 @@ export function Inicial() {
         const resposta = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/municipios');
       const municipios: Municipio[] = await resposta.json();
 
-      // 2️⃣ Encontrar município pelo nome (normalizando acentos)
+      // Encontrar município pelo nome (normalizando acentos)
       const municipio = municipios.find(
         (m) => normalizar(m.nome) === normalizar(data.localizacao)
       );
@@ -156,14 +178,22 @@ export function Inicial() {
         const respostaJSON = await fetch('/cnes_estabelecimentos35.json');
       const respostaJS: Hospital[] = await respostaJSON.json();
 
-      // 4️⃣ Ajustar código IBGE para 6 dígitos (CNES não tem dígito verificador)
+      // Ajustar código IBGE para 6 dígitos (CNES não tem dígito verificador)
       const codigoCNES = String(Math.floor(municipio.id / 10));
 
-      // 5️⃣ Filtrar hospitais do município
+      // Filtrar hospitais do município
       const hospitaisFiltrados = respostaJS.filter(hospital =>
         hospital.CO_IBGE === codigoCNES && normalizar(hospital.NO_FANTASIA || "").includes(normalizar(data.nome))
       );
+      const dadosCarrossel = hospitaisFiltrados.map(h => ({
+        imagem: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f",
+        nome: h.NO_FANTASIA || "Nome não informado",
+        endereco: `${h.NO_LOGRADOURO || ""}, ${h.NU_ENDERECO || ""} - ${h.NO_BAIRRO || ""}`,
+        lotacao: Math.floor(Math.random() * 100),
+        cnes: h.CO_CNES
+      }));
 
+      setHospitaisExibidos(dadosCarrossel)
       console.log("Hospitais filtrados:", hospitaisFiltrados);
       }
 
@@ -175,10 +205,10 @@ export function Inicial() {
 
   // Imagens de exemplo para o carrossel
   const imagensCarrossel = [
-    'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    'https://images.pexels.com/photos/6129237/pexels-photo-6129237.jpeg',
     'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
     'https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1576091160550-2173dba0ef4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+    'https://www.pmpf.rs.gov.br/secretaria-de-saude/wp-content/uploads/sites/50/2022/06/nova-emergencia-600x400.jpg'
   ];
 
   return (
@@ -206,8 +236,17 @@ export function Inicial() {
           {erro && <p style={{ color: 'red' }}>{erro}</p>}
           
 
+
         </div>
       </div>
+
+      {hospitaisExibidos.length > 0 && (
+        <CarrosselEsta 
+          dados={hospitaisExibidos}
+          
+        />
+      )}
+
     </div>
   );
 }

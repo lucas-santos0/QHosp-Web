@@ -5,9 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { auth, db } from "../firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useEffect } from "react";
+import { useState } from "react";
 
 
-// Schema de validação com mensagens corrigidas
+
 const schema = z.object({
   dataNascimento: z.string().min(1, "Informe a data de nascimento"),
   sexo: z.string().min(1, "Informe o sexo"),
@@ -31,6 +32,9 @@ const {
 } = useForm<FormData>({
   resolver: zodResolver(schema),
 });
+
+const [usuarioInfo, setUsuarioInfo] = useState<{ nome?: string; email?: string; cpf?: string }>({});
+
 
 async function Verificacao(data: FormData) {
 
@@ -88,10 +92,7 @@ function waitForUser() {
     async function carregarFicha() {
       const user: any = await waitForUser(); // espera usuário estar pronto
 
-      if (!user) {
-        // usuário não logado, talvez redirecionar ou mostrar mensagem
-        return;
-      }
+      
 
       const fichaRef = doc(db, "Usuarios", user.uid, "FichaMedica", "fichaPrincipal");
 
@@ -117,15 +118,42 @@ function waitForUser() {
     carregarFicha();
   }, [setValue]);
 
+  useEffect(() => {
+  async function carregarUsuario() {
+    const user: any = await waitForUser(); // espera logar
+    if (!user) return;
+
+    const email = user.email;
+
+
+    const userRef = doc(db, "Usuarios", user.uid);
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      const dados = userDoc.data();
+      setUsuarioInfo({
+        nome: dados.Nome,
+        cpf: dados.CPF,
+        email: email
+      });
+    } else {
+      // se não existir documento, mostra só o email do auth
+      setUsuarioInfo({ nome: "—", cpf: "—", email });
+    }
+  }
+
+  carregarUsuario();
+}, []);
+
 
   return (
     <div className={estilos.tudo}>
       <div className={estilos.quaseTudo}>
         <div className={estilos.box}>
           <div className={estilos.titulo}>Ficha médica</div>
-          <p>Nome</p>
-          <p>cpf</p>
-          <p>email</p>
+          <p>Nome: {usuarioInfo.nome}</p>
+          <p>CPF: {usuarioInfo.cpf}</p>
+          <p>Email: {usuarioInfo.email}</p>
           <form className={estilos.formulario} onSubmit={handleSubmit(Verificacao)}>
             <input
               type="date"

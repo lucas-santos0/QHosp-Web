@@ -18,3 +18,5 @@ frontend/build/
 node_modules/.vite
 
 backend/serviceAccountKey.json
+
+cnes_estabelecimentos35.json

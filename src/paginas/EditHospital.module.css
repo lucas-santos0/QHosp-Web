@@ -1,7 +1,9 @@
 .tudo {
     position: relative;
-    height: 180vh;
-    min-height: 600px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--azul-principal) 0%, var(--verde-principal) 100%);
+    padding-top: 100px;
+    padding-bottom: 2rem;
 }
 
 .titulo{
@@ -13,7 +15,6 @@
 .fundo {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-image: url("../assets/bg.jpeg");
     background-size: cover;
     background-position: center;
     filter: blur(8px);

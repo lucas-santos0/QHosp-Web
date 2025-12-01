@@ -77,7 +77,6 @@ export function EsqueceuSenha() {
         alert("Erro ao verificar usuário. Tente novamente.");
       }
     } else {
-      // Agora só navega pra segunda tela, sem validar o código no backend
       if (!data.codigo) {
         alert("Digite o código enviado para o seu e-mail.");
         return;

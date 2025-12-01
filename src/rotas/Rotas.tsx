@@ -12,7 +12,7 @@ import { Rodape } from '../componentes/Rodape'
 import { Outlet } from 'react-router-dom';
 import {EsqueceuSenha} from '../paginas/EsqueceuSenha'
 import {RedefinirSenha} from '../paginas/RedefinirSenha'
-
+import {CadaHospital} from '../paginas/CadaHospital';
 
 //mostrar navbar
 export function ComNavbar() {
@@ -46,7 +46,7 @@ export function Rotas(){
           <Route path='/cadHospital' element={<CadHospital/>} />
           <Route path='/editHospital' element={<EditHospital/>} />
           <Route path='/ficha' element={<Ficha_medica/>} />
-          
+          <Route path="/CadaHospital/:id" element={<CadaHospital />} />
         </Route>
       </Routes>
     </BrowserRouter>
