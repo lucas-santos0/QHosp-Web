@@ -1,21 +1,19 @@
-import {  NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import estilos from './Cadastro.module.css';
 import { useForm } from 'react-hook-form';
-import { addIssueToContext, z } from 'zod';
+import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from "firebase/firestore";
 import { FaArrowLeft } from "react-icons/fa";
-import { sendEmailVerification } from "firebase/auth";
-
 
 const schema = z.object({
   nome: z.string().min(3, "Nome obrigatório"),
   cpf: z.string().min(11, "CPF inválido"),
   email: z.string().email("Email inválido"),
   senha: z.string().min(6, "Mínimo 6 caracteres"),
-  confirmarSenha: z.string().min(6, "Confirme sua senha")
+  confirmarSenha: z.string().min(6, "Confirme sua senha"),
 }).refine((data) => data.senha === data.confirmarSenha, {
   path: ["confirmarSenha"],
   message: "As senhas não coincidem"
@@ -37,24 +35,23 @@ export function Cadastro() {
 
   async function cadastrarUsuario(data: FormData) {
     try {
-      const cpf = data.cpf.replace(/\D/g, ''); // remove pontuação
+      const cpf = data.cpf.replace(/\D/g, '');
 
-      // Cria o usuário no Firebase Authentication
+      // Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.senha);
       const user = userCredential.user;
 
-      // Salva os dados extras no Firestore com o UID como ID do documento
+      // Firestore
       await setDoc(doc(db, "Usuarios", user.uid), {
         Nome: data.nome,
         CPF: cpf,
         Email: data.email,
-        adm: false, // usuário padrão (não administrador)
+        adm: false,
       });
 
-      console.log("Usuário cadastrado com UID:", user.uid);
       alert("Cadastro realizado com sucesso!");
       reset();
-      navegação("/"); // volta para login
+      navegação("/");
 
     } catch (e: any) {
       console.error("Erro ao cadastrar:", e);
@@ -72,11 +69,14 @@ export function Cadastro() {
 
   return (
     <div className={estilos.tudo}>
-      <NavLink to={'/'}><FaArrowLeft  className={estilos.voltar}/></NavLink>
+      <NavLink to={'/'}>
+        <FaArrowLeft className={estilos.voltar} />
+      </NavLink>
 
       <div className={estilos.quaseTudo}>
         <div className={estilos.box}>
           <div className={estilos.titulo}>Cadastro</div>
+
           <form className={estilos.formulario} onSubmit={handleSubmit(cadastrarUsuario)}>
 
             <div className={estilos.grupoCampo}>
@@ -86,7 +86,6 @@ export function Cadastro() {
 
             <div className={estilos.grupoCampo}>
               <input className={estilos.campo} placeholder="CPF" {...register("cpf")} />
-              
               <p className={estilos.mensagemErro}>{errors.cpf?.message || "‎"}</p>
             </div>
 
@@ -110,13 +109,10 @@ export function Cadastro() {
                 <div className={estilos.campobotoes2}>Limpar</div>
               </button>
               <button type="submit" className={estilos.botao}>Cadastrar</button>
-
             </div>
 
           </form>
         </div>
-        
-
       </div>
     </div>
   );
