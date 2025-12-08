@@ -17,4 +17,7 @@ frontend/build/
 # Vite cache
 node_modules/.vite
 
+cnes_estabelecimentos.json
+cnes_estabelecimentos35.json
+
 backend/serviceAccountKey.json

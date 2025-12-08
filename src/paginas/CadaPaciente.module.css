@@ -1,0 +1,85 @@
+.tudo {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--azul-principal) 0%, var(--verde-principal) 100%);
+  padding-top: 100px;
+  padding-bottom: 2rem;
+}
+
+.quaseTudo {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 200px);
+  padding: 2rem 20px;
+  z-index: 2;
+  position: relative;
+}
+
+.box {
+  background-color: #fff;
+  width: 100%;
+  max-width: 700px;
+  border-radius: 35px;
+  padding: 2.5rem;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.18);
+}
+
+.titulo {
+  font-size: 2.4rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, var(--azul-principal), var(--azul-escuro));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* cada linha */
+.infoLinha {
+  margin-bottom: 1.7rem;
+}
+
+/* nome do campo */
+.infoTitulo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--azul-escuro);
+  margin-bottom: 0.4rem;
+}
+
+/* caixa estilo textarea */
+.infoValor {
+  font-size: 1.1rem;
+  color: #222;
+  padding: 14px;
+  background: #f6f6f6;
+  border-radius: 10px;
+  border-left: 4px solid var(--azul-principal);
+  border: 1.5px solid #dcdcdc;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+/* botão voltar */
+.botaoVoltar {
+  display: block;
+  margin: 2rem auto 0 auto;
+  width: 60%;
+  max-width: 280px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--azul-principal), var(--azul-claro));
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.botaoVoltar:hover {
+  background: linear-gradient(135deg, var(--azul-escuro), var(--azul-principal));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}

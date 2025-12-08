@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { auth, db } from "../firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useEffect } from "react";
+import { useState } from "react";
+
 
 
 // Schema de validação com mensagens corrigidas
@@ -31,6 +33,9 @@ const {
 } = useForm<FormData>({
   resolver: zodResolver(schema),
 });
+
+const [usuarioInfo, setUsuarioInfo] = useState<{ nome?: string; email?: string; cpf?: string }>({});
+
 
 async function Verificacao(data: FormData) {
 
@@ -88,10 +93,7 @@ function waitForUser() {
     async function carregarFicha() {
       const user: any = await waitForUser(); // espera usuário estar pronto
 
-      if (!user) {
-        // usuário não logado, talvez redirecionar ou mostrar mensagem
-        return;
-      }
+      
 
       const fichaRef = doc(db, "Usuarios", user.uid, "FichaMedica", "fichaPrincipal");
 
@@ -117,24 +119,53 @@ function waitForUser() {
     carregarFicha();
   }, [setValue]);
 
+  useEffect(() => {
+  async function carregarUsuario() {
+    const user: any = await waitForUser(); // espera logar
+    if (!user) return;
+
+    const email = user.email;
+
+
+    const userRef = doc(db, "Usuarios", user.uid);
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      const dados = userDoc.data();
+      setUsuarioInfo({
+        nome: dados.Nome,
+        cpf: dados.CPF,
+        email: email
+      });
+    } else {
+      // se não existir documento, mostra só o email do auth
+      setUsuarioInfo({ nome: "—", cpf: "—", email });
+    }
+  }
+
+  carregarUsuario();
+}, []);
+
 
   return (
     <div className={estilos.tudo}>
       <div className={estilos.quaseTudo}>
         <div className={estilos.box}>
           <div className={estilos.titulo}>Ficha médica</div>
-          <p>Nome</p>
-          <p>cpf</p>
-          <p>email</p>
+          <p>Nome: {usuarioInfo.nome}</p>
+          <p>CPF: {usuarioInfo.cpf}</p>
+          <p>Email: {usuarioInfo.email}</p>
           <form className={estilos.formulario} onSubmit={handleSubmit(Verificacao)}>
+            <div className={estilos.infoTitulo}>Data de nascimento</div>
             <input
               type="date"
               placeholder="Selecione sua Data de nascimento :"
               {...register("dataNascimento")}
               className={estilos.campo}
             />
+            
             <p className={estilos.mensagemErro}>{errors.dataNascimento?.message || "‎"}</p>
-
+            <div className={estilos.infoTitulo}>Sexo</div>
             <select {...register("sexo")} className={estilos.campo} defaultValue="">
               <option value="" disabled hidden>Selecione o seu Sexo :</option>
               <option value="M">Masculino (M)</option>
@@ -142,6 +173,7 @@ function waitForUser() {
             </select>
             <p className={estilos.mensagemErro}>{errors.sexo?.message || "‎"}</p>
 
+            <div className={estilos.infoTitulo}>Telefone</div>
             <input
               type="text"
               placeholder="Telefone"
@@ -149,7 +181,7 @@ function waitForUser() {
               className={estilos.campo}
             />
             <p className={estilos.mensagemErro}>{errors.telefone?.message || "‎"}</p>
-
+            <div className={estilos.infoTitulo}>Tipo Sanguineo</div>
             <select {...register("tipoSanguineo")} className={estilos.campo} defaultValue="">
               <option value="" disabled hidden>Selecione seu Tipo Sanguineo</option>
               <option value="A+">A+</option>
@@ -163,6 +195,7 @@ function waitForUser() {
             </select>
             <p className={estilos.mensagemErro}>{errors.tipoSanguineo?.message || "‎"}</p>
 
+            <div className={estilos.infoTitulo}>Alergias</div>
             <input
               type="text"
               placeholder="Alergia (se houver)"
@@ -170,7 +203,8 @@ function waitForUser() {
               className={estilos.campo}
             />
             <p className={estilos.mensagemErro}>{errors.alergia?.message || "‎"}</p>
-
+            
+            <div className={estilos.infoTitulo}>Endereço</div>
             <input
               type="text"
               placeholder="Endereço"

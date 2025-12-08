@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { auth, db } from "../firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 const schema = z.object({
   nome: z.string().min(1, "Informe o nome do hospital"),
@@ -44,10 +44,13 @@ export function CadHospital() {
     };
 
     try {
-      const hospitaisCollection = collection(db, "Hospitais");
-      await addDoc(hospitaisCollection, hospital);
+      // 📌 Aqui o documento é criado com o ID = codigoCnes
+      const ref = doc(db, "Hospitais", data.codigoCnes);
+
+      await setDoc(ref, hospital);
+
       alert("Hospital cadastrado com sucesso!");
-      reset(); // limpa o formulário após envio
+      reset();
     } catch (error) {
       console.error("Erro ao cadastrar hospital:", error);
       alert("Erro ao cadastrar hospital.");

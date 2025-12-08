@@ -54,6 +54,7 @@ export function Navbar() {
         {isAdmin ? (
           // Só mostra o link admin para admins
           <>
+            <NavLink className={({ isActive }) => isActive ? estilos.linkActive : estilos.link} to={'/consulPaciente'}>Consulta de paciente</NavLink>
             <NavLink className={({ isActive }) => isActive ? estilos.linkActive : estilos.link} to={'/cadHospital'}>Cadastro de Hospital</NavLink>
             <NavLink className={({ isActive }) => isActive ? estilos.linkActive : estilos.link} to={'/editHospital'}>Editor de Hospital</NavLink>
           </>

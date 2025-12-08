@@ -1,8 +1,15 @@
 .tudo {
-    position: relative;
-    min-height: 100vh;
-    background: linear-gradient(135deg, var(--cinza-claro) 0%, var(--branco) 100%);
-    padding-top: 100px; /* Espaço para a navbar fixa */
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--cinza-claro) 0%, var(--branco) 100%);
+  padding-top: 100px; /* Espaço para a navbar fixa */
+}
+
+/* Seção do carrossel */
+.carrosselSection {
+  width: 100%;
+  padding: 2rem;
+  margin-bottom: 2rem;
 }
 
 .titulo {
@@ -16,106 +23,103 @@
   background-clip: text;
 }
 
+.quaseTudo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 100px);
+  padding: 2rem;
+}
+
 .box {
   background: var(--branco);
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 20px;
-  padding: 3rem;
   box-shadow: 0 20px 40px var(--sombra);
+  gap: 2rem;
+  padding: 3rem;
   position: relative;
   border: 1px solid var(--cinza-medio);
   backdrop-filter: blur(10px);
 }
 
-.quaseTudo {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: calc(100vh - 100px);
-  padding: 2rem;
-  padding-top: 3rem;
-}
-
-.infoTitulo {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--azul-escuro);
-  margin-bottom: 0.4rem;
-}
-
-.formulario {
+.box form {
   display: flex;
   flex-direction: column;
-  padding-top: 1rem;
-  gap: 0.8rem;
+  align-items: center;
+  gap: 1rem;
   width: 100%;
 }
 
-.campo {
+.areaTexto {
+  resize: none;
   border: 2px solid var(--cinza-medio);
   background-color: var(--cinza-claro);
   border-radius: 12px;
-  height: 50px;
-  width: 100%;
-  margin: 0;
-  font-size: 16px;
+  font-size: 1rem;
   font-family: inherit;
-  padding: 0 15px;
+  width: 100%;
+  max-width: 500px;
+  height: 100px;
+  padding: 1rem;
+  margin: 0;
   box-sizing: border-box;
   transition: all 0.3s ease;
   color: var(--preto);
 }
 
-.campo:focus {
+.areaTexto:focus {
   outline: none;
   border-color: var(--azul-claro);
   background-color: var(--branco);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.campo::placeholder {
+.areaTexto::placeholder {
   color: var(--cinza-escuro);
   font-weight: 400;
 }
 
-select.campo {
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 15px center;
-  background-size: 16px;
-  padding-right: 40px;
+.formulario {
+  display: flex;
+  flex-direction: column;
+  padding-top: 6vh;
+  row-gap: 10vh;
+  width: 100%;
 }
 
-select.campo option {
-  background-color: white;
-  color: #333;
-  padding: 10px;
+.campo {
+  background-color: rgb(221, 221, 221);
+  border-radius: 2vh;
+  height: 5vh;
+  width: 70%;
+  margin: auto;
+  font-size: 25px;
+  padding-left: 15px;
+  border: none; 
 }
 
-.campobotoes{
+.campobotoes {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
 }
 
-.campobotoes2{
+.campobotoes2 {
   background-color: var(--branco);
   border-radius: 15px;
-  margin: 0;
+  margin: 2% 1%;
 }
 
-.botao {
+.buscar {
   border-radius: 25px;
   border: none;
-  margin: 0;
-  width: 140px;
+  margin: auto;
+  width: 40%;
+  min-width: 150px;
   height: 50px;
   font-size: 16px;
   font-weight: 600;
@@ -126,13 +130,9 @@ select.campo option {
   box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
   position: relative;
   overflow: hidden;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.botao::before {
+.buscar::before {
   content: '';
   position: absolute;
   top: 0;
@@ -143,24 +143,14 @@ select.campo option {
   transition: left 0.5s;
 }
 
-.botao:hover::before {
+.buscar:hover::before {
   left: 100%;
 }
 
-.botao:hover {
+.buscar:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
   background: linear-gradient(135deg, var(--azul-claro) 0%, var(--verde-principal) 100%);
-}
-
-.mensagemErro {
-  color: rgb(255, 0, 0);
-  text-align: center;
-  font-size: 14px;
-  margin: 0;
-  padding: 0;
-  min-height: 20px;
-  font-weight: 400;
 }
 
 /* Media queries para responsividade */
@@ -168,30 +158,22 @@ select.campo option {
   .box {
     width: 90%;
     padding: 2rem;
+    gap: 1.5rem;
   }
   
   .titulo {
     font-size: 2rem;
   }
   
-  .campo {
+  .areaTexto {
+    font-size: 0.9rem;
+    height: 90px;
+  }
+  
+  .buscar {
     font-size: 15px;
     height: 45px;
   }
-  
-  .botao {
-    font-size: 15px;
-    width: 120px;
-    height: 45px;
-  }
-  
-  select.campo {
-    background-size: 14px;
-    padding-right: 35px;
-  }
-
-  
-
 }
 
 @media (max-width: 768px) {
@@ -202,12 +184,12 @@ select.campo option {
   .quaseTudo {
     min-height: calc(100vh - 120px);
     padding: 1rem;
-    padding-top: 2rem;
   }
   
   .box {
     width: 95%;
     padding: 1.5rem;
+    gap: 1.5rem;
     border-radius: 15px;
   }
   
@@ -215,20 +197,16 @@ select.campo option {
     font-size: 1.8rem;
   }
   
-  .campo {
-    font-size: 14px;
-    height: 40px;
+  .areaTexto {
+    font-size: 0.85rem;
+    height: 80px;
+    padding: 0.8rem;
   }
   
-  .botao {
+  .buscar {
     font-size: 14px;
-    width: 110px;
     height: 42px;
-  }
-  
-  select.campo {
-    background-size: 12px;
-    padding-right: 30px;
+    width: 50%;
   }
 }
 
@@ -240,12 +218,12 @@ select.campo option {
   .quaseTudo {
     min-height: calc(100vh - 140px);
     padding: 0.8rem;
-    padding-top: 1.5rem;
   }
   
   .box {
     width: 100%;
     padding: 1.2rem;
+    gap: 1.2rem;
     border-radius: 12px;
   }
   
@@ -253,21 +231,15 @@ select.campo option {
     font-size: 1.5rem;
   }
   
-  .campo {
-    font-size: 13px;
-    height: 35px;
+  .areaTexto {
+    font-size: 0.8rem;
+    height: 70px;
+    padding: 0.7rem;
   }
   
-  .botao {
+  .buscar {
     font-size: 13px;
-    width: 100px;
     height: 40px;
-  }
-  
-  select.campo {
-    background-size: 10px;
-    padding-right: 25px;
+    width: 60%;
   }
 }
-
-  

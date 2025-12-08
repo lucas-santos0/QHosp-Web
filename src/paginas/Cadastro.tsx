@@ -1,7 +1,7 @@
 import {  NavLink, useNavigate } from 'react-router-dom';
 import estilos from './Cadastro.module.css';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { addIssueToContext, z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
