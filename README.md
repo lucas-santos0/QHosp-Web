@@ -1,54 +1,62 @@
-# React + TypeScript + Vite
+# 🏥 QHosp — Gestão e Suporte Hospitalar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Sobre o projeto
 
-Currently, two official plugins are available:
+O **QHosp** é um sistema desenvolvido para otimizar a organização e comunicação dentro dos hospitais públicos.  
+O projeto foi criado ao longo de 10 meses como parte de um Trabalho de Conclusão de Curso (TCC), buscando resolver problemas reais como:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Sobrecarga de profissionais de saúde  
+- Falta de integração entre setores  
+- Demoras no atendimento  
+- Falhas de comunicação entre equipe e pacientes  
 
-## Expanding the ESLint configuration
+O sistema utiliza tecnologia **web e mobile** para facilitar processos internos e melhorar a experiência dos pacientes.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 📁 Sobre este repositório
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Este é o repositório da **versão Web do QHosp**, desenvolvida para facilitar o acesso de pacientes e profissionais a informações hospitalares essenciais, oferecendo um ambiente moderno, responsivo e rápido.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+A aplicação funciona integrada ao backend e ao Firebase, permitindo:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- Cadastro e login  
+- Gerenciamento de fichas médicas  
+- Listagem de hospitais  
+- Acesso a dados atualizados  
+- Comunicação com APIs externas  
+
+---
+
+## 🚀 Funcionalidades da Aplicação Web
+
+### 👥 Usuários (Pacientes)
+- Criar conta e fazer login  
+- Acessar informações do próprio cadastro  
+- Enviar mensagens de contato  
+- Visualizar dados essenciais sincronizados com o backend  
+
+### 👨‍⚕️ Profissionais
+- Cadastrar e editar hospitais  
+- Visualizar dados do hospital  
+
+---
+
+## 🔗 Integrações
+
+- Firebase Authentication  
+- Firebase Firestore  
+- API CNES  
+- Backend Node.js hospedado no Render  
+- Deploy da aplicação no Vercel  
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- React  
+- Vite  
+- CSS Modules  
+- React Hook Form  
+- Zod  
+- Firebase (Auth + Firestore)

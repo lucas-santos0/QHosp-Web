@@ -44,7 +44,11 @@ export function CadHospital() {
     };
 
     try {
+<<<<<<< HEAD
       // 📌 Aqui o documento é criado com o ID = codigoCnes
+=======
+      // Aqui o documento é criado com o ID = codigoCnes
+>>>>>>> 6010a1cb38c68c18351e5578bb473835d97aa7b2
       const ref = doc(db, "Hospitais", data.codigoCnes);
 
       await setDoc(ref, hospital);

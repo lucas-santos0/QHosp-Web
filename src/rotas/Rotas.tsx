@@ -13,8 +13,11 @@ import { Outlet } from 'react-router-dom';
 import {EsqueceuSenha} from '../paginas/EsqueceuSenha'
 import {RedefinirSenha} from '../paginas/RedefinirSenha'
 import {CadaHospital} from '../paginas/CadaHospital';
+<<<<<<< HEAD
 import {ConsulPaciente} from '../paginas/ConsulPaciente';
 import {CadaPaciente} from '../paginas/CadaPaciente'
+=======
+>>>>>>> 6010a1cb38c68c18351e5578bb473835d97aa7b2
 
 //mostrar navbar
 export function ComNavbar() {

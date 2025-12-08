@@ -45,11 +45,19 @@ export function Inicial() {
     console.log('Município digitado:', data.localizacao);
 
     try {
+<<<<<<< HEAD
     
       const resposta = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/municipios');
       const municipios: Municipio[] = await resposta.json();
 
       
+=======
+      // Buscar municípios do IBGE
+      const resposta = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/municipios');
+      const municipios: Municipio[] = await resposta.json();
+
+      // Encontrar município pelo nome (normalizando acentos)
+>>>>>>> 6010a1cb38c68c18351e5578bb473835d97aa7b2
       const municipio = municipios.find(
         (m) => normalizar(m.nome) === normalizar(data.localizacao)
       );
@@ -59,6 +67,7 @@ export function Inicial() {
         return;
       }
 
+<<<<<<< HEAD
       
       const respostaJSON = await fetch('/cnes_estabelecimentos35.json');
       const respostaJS: Hospital[] = await respostaJSON.json();
@@ -67,6 +76,16 @@ export function Inicial() {
       const codigoCNES = String(Math.floor(municipio.id / 10));
 
       
+=======
+      // Buscar hospitais CNES
+      const respostaJSON = await fetch('/cnes_estabelecimentos35.json');
+      const respostaJS: Hospital[] = await respostaJSON.json();
+
+      // Ajustar código IBGE para 6 dígitos (CNES não tem dígito verificador)
+      const codigoCNES = String(Math.floor(municipio.id / 10));
+
+      // Filtrar hospitais do município
+>>>>>>> 6010a1cb38c68c18351e5578bb473835d97aa7b2
       const hospitaisFiltrados = respostaJS.filter(hospital =>
         hospital.CO_IBGE === codigoCNES
       );
@@ -140,7 +159,11 @@ export function Inicial() {
       }
 
       // Buscar hospitais CNES
+<<<<<<< HEAD
       const respostaJSON = await fetch('/cnes_estabelecimentos.json');
+=======
+      const respostaJSON = await fetch('/cnes_estabelecimentos35.json');
+>>>>>>> 6010a1cb38c68c18351e5578bb473835d97aa7b2
       const respostaJS: Hospital[] = await respostaJSON.json();
 
       // Ajustar código IBGE para 6 dígitos
@@ -205,10 +228,17 @@ export function Inicial() {
 
   
   const imagensCarrossel = [
+<<<<<<< HEAD
     'https://saude.rs.gov.br/upload/recortes/202005/16121057_142430_GD.jpg',
     'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
     'https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
     'https://admin.pi.gov.br/uploads/Whats_App_Image_2024_10_18_at_12_01_51_072d2d7158.jpeg'
+=======
+    'https://images.pexels.com/photos/6129237/pexels-photo-6129237.jpeg',
+    'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    'https://www.pmpf.rs.gov.br/secretaria-de-saude/wp-content/uploads/sites/50/2022/06/nova-emergencia-600x400.jpg'
+>>>>>>> 6010a1cb38c68c18351e5578bb473835d97aa7b2
   ];
 
   return (

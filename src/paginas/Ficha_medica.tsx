@@ -9,7 +9,6 @@ import { useState } from "react";
 
 
 
-// Schema de validação com mensagens corrigidas
 const schema = z.object({
   dataNascimento: z.string().min(1, "Informe a data de nascimento"),
   sexo: z.string().min(1, "Informe o sexo"),

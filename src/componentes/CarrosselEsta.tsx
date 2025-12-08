@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import estilos from "./CarrosselEsta.module.css";
 
 interface ItemCarrossel {
   imagem?: string;
+=======
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import estilos from './CarrosselEsta.module.css';
+
+interface ItemCarrossel {
+  imagem: string;
+>>>>>>> 6010a1cb38c68c18351e5578bb473835d97aa7b2
   nome: string;
   lotacao: number;
   endereco: string;
@@ -18,6 +27,7 @@ export function CarrosselEsta({ dados }: CarrosselProps) {
   const [slideAtual, setSlideAtual] = useState(0);
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   // garante que slideAtual nunca fique maior que o array quando dados mudarem
   useEffect(() => {
     if (dados.length === 0) {
@@ -27,12 +37,15 @@ export function CarrosselEsta({ dados }: CarrosselProps) {
     }
   }, [dados, slideAtual]);
 
+=======
+>>>>>>> 6010a1cb38c68c18351e5578bb473835d97aa7b2
   const corLotacao = (valor: number) => {
     if (valor < 40) return "#4CAF50";
     if (valor < 70) return "#FFA500";
     return "#FF3B30";
   };
 
+<<<<<<< HEAD
   const imagensHospitais = [
   "https://cdn.esbrasil.com.br/wp-content/uploads/2024/03/fachadaHEVV130711-1.jpg",
   "https://pesqsaude.com.br/wp-content/uploads/2024/01/5-melhores-hospitais-de-Belem-PesQsaude-Blog.png",
@@ -53,6 +66,8 @@ export function CarrosselEsta({ dados }: CarrosselProps) {
     setSlideAtual((p) => (p + 1) % dados.length);
   };
 
+=======
+>>>>>>> 6010a1cb38c68c18351e5578bb473835d97aa7b2
   return (
     <div className={estilos.carrosselContainer}>
       <div className={estilos.carrossel}>
@@ -62,6 +77,7 @@ export function CarrosselEsta({ dados }: CarrosselProps) {
         >
           {dados.map((item, index) => (
             <div
+<<<<<<< HEAD
               key={item.cnes || index}
               className={estilos.slide}
               onClick={() => navigate(`/CadaHospital/${item.cnes}`)}
@@ -70,6 +86,13 @@ export function CarrosselEsta({ dados }: CarrosselProps) {
                 src={imagensHospitais[index % imagensHospitais.length]}
                 className={estilos.imagemSlide}
               />
+=======
+              key={index}
+              className={estilos.slide}
+              onClick={() => navigate(`/CadaHospital/${item.cnes}`)}
+            >
+              <img src={item.imagem} className={estilos.imagemSlide} />
+>>>>>>> 6010a1cb38c68c18351e5578bb473835d97aa7b2
 
               <div className={estilos.informacoes}>
                 <p className={estilos.nomeEstabelecimento}>{item.nome}</p>
@@ -94,19 +117,31 @@ export function CarrosselEsta({ dados }: CarrosselProps) {
         </div>
 
         <button
+<<<<<<< HEAD
           onClick={irPrev}
           className={estilos.botaoNav}
           aria-label="Anterior"
           disabled={!podeNavegar}
+=======
+          onClick={() =>
+            setSlideAtual((p) => (p - 1 + dados.length) % dados.length)
+          }
+          className={estilos.botaoNav}
+>>>>>>> 6010a1cb38c68c18351e5578bb473835d97aa7b2
         >
           ‹
         </button>
 
         <button
+<<<<<<< HEAD
           onClick={irNext}
           className={estilos.botaoNav}
           aria-label="Próximo"
           disabled={!podeNavegar}
+=======
+          onClick={() => setSlideAtual((p) => (p + 1) % dados.length)}
+          className={estilos.botaoNav}
+>>>>>>> 6010a1cb38c68c18351e5578bb473835d97aa7b2
         >
           ›
         </button>
